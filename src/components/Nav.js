@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import superagent from 'superagent';
 
 class Nav extends Component {
 
@@ -9,13 +10,32 @@ class Nav extends Component {
     };
   }
 
+
+
+
   searchVenues() {
-    console.log("searchVenues: " + this.state.zipCode);
+    // console.log("searchVenues: " + this.state.zipCode);
+    const url = 'https://api.foursquare.com/v2/venues/search';
+
+    const params = {
+      v: '20140806',
+      ll: '51.509865, -0.118092',
+      client_id: '3PJ02P0EE2SXCBEDHY53DGCB40DKPTPRQHKK0QECQLSKS3LF',
+      client_secret: 'DOLCFQPJCRIXOCIPMLIPZDBQYT45CXROMJ3Q2IN4TWSZG3LK'
+    };
+
+    superagent
+    .get(url)
+    .query(params)
+    .set('Accept', 'application/json')
+    .end((err, response) => {
+      const venues = response.body.response.venues
+      console.log("RESPONSE: " + JSON.stringify(venues));
+    });
   }
 
 // After input tag <input />, event is automatically passed in
   updateZipcode(event) {
-    console.log("updateZipcode: " + event.target.value);
     this.setState({
       zipCode: event.target.value
     });
