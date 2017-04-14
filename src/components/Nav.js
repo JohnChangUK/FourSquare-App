@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import { connect } from 'react-redux';
+import actions from '../actions';
 
 class Nav extends Component {
 
   constructor() {
     super();
     this.state = {
-      zipCode: ''
+      zipCode: '',
+      filter: 'food'
     };
   }
 
-  searchVenues() {
+  searchVenues(event) {
+    event.preventDefault();
+
     console.log("searchVenues: " + this.state.zipCode);
     const url = 'https://api.foursquare.com/v2/venues/search';
 
@@ -18,7 +23,8 @@ class Nav extends Component {
       v: '20140806',
       near: this.state.zipCode,
       client_id: '3PJ02P0EE2SXCBEDHY53DGCB40DKPTPRQHKK0QECQLSKS3LF',
-      client_secret: 'DOLCFQPJCRIXOCIPMLIPZDBQYT45CXROMJ3Q2IN4TWSZG3LK'
+      client_secret: 'DOLCFQPJCRIXOCIPMLIPZDBQYT45CXROMJ3Q2IN4TWSZG3LK',
+      query: this.state.filter
     };
 
     superagent
@@ -27,7 +33,14 @@ class Nav extends Component {
     .set('Accept', 'application/json')
     .end((err, response) => {
       const venues = response.body.response.venues;
-      console.log("RESPONSE: " + JSON.stringify(venues));
+      this.props.venuesReceived(venues);
+    });
+  }
+
+  changeFilter(event) {
+    console.log("Changed the Filter" + event.target.value);
+    this.setState({
+      filter: event.target.value
     });
   }
 
@@ -40,12 +53,39 @@ class Nav extends Component {
 
     render() {
       return (
-          <div>
-            <input onChange={this.updateZipcode.bind(this)} type="text" placeholder="Zip Code" />
-            <button onClick={this.searchVenues.bind(this)}>Search</button>
+      <nav className="navbar navbar-default">
+          <div className="container-fluid">
+            <div className="navbar-header">
+            <form className="navbar-form navbar-left" role="search">
+              <div className="form-group">
+
+              <input onChange={this.updateZipcode.bind(this)} className="form-control" type="text" placeholder="Zip Code" />
+              <select id="filter" onChange={this.changeFilter.bind(this)} style={{marginLeft:12}} className="form-control">
+                <option value="food">Food</option>
+                <option value="drinks">Coffee</option>
+                <option value="clothing">Clothing</option>
+              </select>
+              </div>
+              <button style={{marginLeft:12}} onClick={this.searchVenues.bind(this)} className="btn btn-default">Search</button>
+            </form>
+            </div>
           </div>
+      </nav>
         );
     }
 }
 
-export default Nav;
+const stateToProps = (state) => {
+  return {
+    venues: state.venue
+  }
+}
+
+const dispatchToProps = (dispatch) => {
+  return {
+    venuesReceived: (venues) => dispatch(actions.venuesReceived(venues))
+  }
+}
+
+
+export default connect(stateToProps, dispatchToProps)(Nav);

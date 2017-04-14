@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import actions from '../actions';
 
 class Venues extends Component {
   
     render() {
+      const venues = this.props.venues || []
+
       return (
           <div>
             <ol>
-              <li>Venue 1</li>
-              <li>Venue 2</li> 
-              <li>Venue 3</li>  
+                { 
+                  venues.map( (venue, i) => {
+                    return (
+                        <li key={venue.id}>{venue.name}</li>
+                      );
+                  })
+                }
             </ol>
           </div>
         );
     }
 }
 
-export default Venues;
+const stateToProps = (state) => {
+  return {
+// State refers to the store, venue refers to the Reducer
+// venues refers to the key of the state, updated['venues']
+    venues: state.venue.venues
+  }
+}
+
+export default connect(stateToProps)(Venues);
