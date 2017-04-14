@@ -10,16 +10,13 @@ class Nav extends Component {
     };
   }
 
-
-
-
   searchVenues() {
-    // console.log("searchVenues: " + this.state.zipCode);
+    console.log("searchVenues: " + this.state.zipCode);
     const url = 'https://api.foursquare.com/v2/venues/search';
 
     const params = {
       v: '20140806',
-      ll: '51.509865, -0.118092',
+      near: this.state.zipCode,
       client_id: '3PJ02P0EE2SXCBEDHY53DGCB40DKPTPRQHKK0QECQLSKS3LF',
       client_secret: 'DOLCFQPJCRIXOCIPMLIPZDBQYT45CXROMJ3Q2IN4TWSZG3LK'
     };
@@ -29,7 +26,7 @@ class Nav extends Component {
     .query(params)
     .set('Accept', 'application/json')
     .end((err, response) => {
-      const venues = response.body.response.venues
+      const venues = response.body.response.venues;
       console.log("RESPONSE: " + JSON.stringify(venues));
     });
   }
