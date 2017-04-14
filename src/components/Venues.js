@@ -8,18 +8,26 @@ class Venues extends Component {
       const venues = this.props.venues || []
 
       return (
-          <div>
+        <div className="row">
+          <div className="col-md-6 col-md-offset-6">
             <ol>
-                { 
-                  venues.map( (venue, i) => {
-                    return (
-                        <li key={venue.id}>{venue.name}</li>
-                      );
-                  })
-                }
+              { venues.map((venue, i) => {
+                  return (
+                    <li key={venue.id}>
+                      <div style={{padding:12, marginBottom:12, background:'#f9f9f9'}}>
+                        <h4 style={{marginBottom:0}}>{venue.name}</h4>
+                        <span>{venue.location.address}</span><br />
+                        <a href={venue.url}>{venue.url}</a>
+                      </div>
+                    </li>
+                  )
+                })
+              }
             </ol>
+
           </div>
-        );
+        </div>
+        )
     }
 }
 

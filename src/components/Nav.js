@@ -58,13 +58,14 @@ class Nav extends Component {
             <div className="navbar-header">
             <form className="navbar-form navbar-left" role="search">
               <div className="form-group">
-
-              <input onChange={this.updateZipcode.bind(this)} className="form-control" type="text" placeholder="Zip Code" />
-              <select id="filter" onChange={this.changeFilter.bind(this)} style={{marginLeft:12}} className="form-control">
-                <option value="food">Food</option>
-                <option value="drinks">Coffee</option>
-                <option value="clothing">Clothing</option>
-              </select>
+                <input onChange={this.updateZipcode.bind(this)} className="form-control" type="text" placeholder="Zip Code" />
+                <select id="filter" onChange={this.changeFilter.bind(this)} style={{marginLeft:12}} className="form-control">
+                  <option value="food">Food</option>
+                  <option value="coffee">Coffee</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="music">Music</option>
+                  <option value="fitness">Fitness</option>
+                </select>
               </div>
               <button style={{marginLeft:12}} onClick={this.searchVenues.bind(this)} className="btn btn-default">Search</button>
             </form>

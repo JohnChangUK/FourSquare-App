@@ -11260,13 +11260,23 @@ var Nav = function (_Component) {
                   ),
                   _react2.default.createElement(
                     'option',
-                    { value: 'drinks' },
+                    { value: 'coffee' },
                     'Coffee'
                   ),
                   _react2.default.createElement(
                     'option',
                     { value: 'clothing' },
                     'Clothing'
+                  ),
+                  _react2.default.createElement(
+                    'option',
+                    { value: 'music' },
+                    'Music'
+                  ),
+                  _react2.default.createElement(
+                    'option',
+                    { value: 'fitness' },
+                    'Fitness'
                   )
                 )
               ),
@@ -11348,17 +11358,40 @@ var Venues = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'row' },
         _react2.default.createElement(
-          'ol',
-          null,
-          venues.map(function (venue, i) {
-            return _react2.default.createElement(
-              'li',
-              { key: venue.id },
-              venue.name
-            );
-          })
+          'div',
+          { className: 'col-md-6 col-md-offset-6' },
+          _react2.default.createElement(
+            'ol',
+            null,
+            venues.map(function (venue, i) {
+              return _react2.default.createElement(
+                'li',
+                { key: venue.id },
+                _react2.default.createElement(
+                  'div',
+                  { style: { padding: 12, marginBottom: 12, background: '#f9f9f9' } },
+                  _react2.default.createElement(
+                    'h4',
+                    { style: { marginBottom: 0 } },
+                    venue.name
+                  ),
+                  _react2.default.createElement(
+                    'span',
+                    null,
+                    venue.location.address
+                  ),
+                  _react2.default.createElement('br', null),
+                  _react2.default.createElement(
+                    'a',
+                    { href: venue.url },
+                    venue.url
+                  )
+                )
+              );
+            })
+          )
         )
       );
     }
