@@ -1,0 +1,1 @@
+## An application that queries the Foursquare API for nearby venues based on a postcode and category entered by the user. This is a simple side project that shows how to integrate Redux and process data from API requests.
